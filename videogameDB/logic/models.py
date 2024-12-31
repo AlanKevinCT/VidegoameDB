@@ -6,6 +6,7 @@ class VGEnum(models.TextChoices):
     DONE = 'done', 'Done'
 
 class Videogame(models.Model):
+    id_game = models.AutoField(primary_key=True, null=False)
     title = models.CharField(max_length=100)
     relase_date = models.DateField()
     is_it_bought = models.BooleanField(default=True)
