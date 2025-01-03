@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('', views.enlist, name='enlist_vg'),
-    path('add', views.AddVideogame.as_view(), name='post_vg'),
+    path('', enlist, name='enlist_vg'),
+    path('add/', AddVideogame.as_view(), name='add_vg'),
 ]
