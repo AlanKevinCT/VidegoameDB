@@ -8,7 +8,14 @@
     <h1>List</h1>
     <ul>
         {% for game in games %}
-            <li>{{ game.name }} - {{ game.plataform }} </li>
+            <li>
+                {{ game.id_game }}. {{ game.title }} 
+                <br> relase date: {{ game.relase_date }}
+                <br> is it bought?: {{ game.is_it_bought }}
+                <br> platform: {{ game.platform }}
+                <br> story mode: {{ game.story_mode }}
+                <br> any percent: {{ game.any_percent }}
+            </li>
         {% endfor %}
     </ul>
 </body>
