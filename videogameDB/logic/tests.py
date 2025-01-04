@@ -90,15 +90,19 @@ class VidegamesTest(TestCase):
             story_mode=VGEnum.DONE,
             any_percent=VGEnum.NOT_STARTED
         )
-        response = self.client.patch(reverse('edit_vg', args=[vg.id_game])), {
+        response = self.client.post(reverse('edit_vg', args=[vg.id_game]), {
+            '_method': 'PATCH',
             'title': 'Deltarune',
+            'relase_date': '2020-12-30',
             'is_it_bought': True,
             'platform': 'PC',
-            'any_percent': VGEnum.DONE
-        }
+            'story_mode': VGEnum.DONE.value,
+            'any_percent': VGEnum.DONE.value
+        })
         self.assertEqual(response.status_code, 302)
-        videogame = Videogame.objects.get(title='Deltarune')
-        self.assertNotEqual(videogame.is_it_bought, vg.title)
-        self.assertNotEqual(videogame.is_it_bought, vg.is_it_bought)
-        self.assertNotEqual(videogame.platform, vg.platform)
-        self.assertNotEqual(videogame.any_percent, vg.any_percent)
+        videogame = Videogame.objects.get(pk=vg.id_game)
+        self.assertEqual(videogame.title, 'Deltarune')
+        self.assertNotEqual(videogame.is_it_bought, False)
+        self.assertEqual(videogame.platform, 'PC')
+        self.assertEqual(videogame.story_mode, VGEnum.DONE)
+        self.assertEqual(videogame.any_percent, VGEnum.DONE)
