@@ -13,8 +13,8 @@ class AddVideogame(APIView):
         return render(request, 'add-form.html', {'form': form})
     
     def post(self, request):
-            form = Form(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('enlist_vg')
-            return render(request, 'add-form.html', {'form': form})
+        form = Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('enlist_vg')
+        return render(request, 'add-form.html', {'form': form})

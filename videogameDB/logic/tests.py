@@ -66,3 +66,17 @@ class VidegamesTest(TestCase):
         self.assertEqual(videogame.platform, 'Multiplatform')
         self.assertEqual(videogame.story_mode, VGEnum.DONE)
         self.assertEqual(videogame.any_percent, VGEnum.DONE)
+
+    def test_rm_vg(self):
+        vg = Videogame.objects.create(
+            title='Cuphead',
+            relase_date='2015-10-26',
+            is_it_bought=True,
+            platform='PC',
+            story_mode=VGEnum.NOT_STARTED,
+            any_percent=VGEnum.NOT_STARTED
+        )
+        response = self.client.delete(reverse('rm', args=[vg.id_game]))
+        self.assertEqual(response.status_code, 204)
+        with self.assertRaises(Videogame.DoesNotExist):
+            Videogame.objects.get(id=vg.id)
