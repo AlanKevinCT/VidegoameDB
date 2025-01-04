@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework import status
 from datetime import date
 from .models import *
 
@@ -51,19 +50,19 @@ class VidegamesTest(TestCase):
         )
         self.assertEqual(actual_data, expected_data)
 
-    def test_addVG(self):
-        Videogame = {     
+    def test_add_vg(self):
+        response = self.client.post(reverse('add_vg'), {
             'title': 'Undertale',
-            'relase_date': date(2015, 10, 21),
+            'relase_date': '2015-10-21',
             'is_it_bought': False,
             'platform': 'Multiplatform',
             'story_mode': VGEnum.DONE,
             'any_percent': VGEnum.DONE
-        }
-        response = self.client.post(reverse('post_vg'), Videogame, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["title"], "Undertale")
-        self.assertEqual(response.data["relase_date"], "2015-10-21")
-        self.assertEqual(response.data["is_it_bought"], False)
-        self.assertEqual(response.data["story_mode"], VGEnum.DONE)
-        self.assertEqual(response.data["any_percent"], VGEnum.DONE)
+        })
+        self.assertEqual(response.status_code, 302)
+        videogame = Videogame.objects.get(title='Undertale')
+        self.assertEqual(videogame.relase_date, date(2015, 10, 21))
+        self.assertEqual(videogame.is_it_bought, False)
+        self.assertEqual(videogame.platform, 'Multiplatform')
+        self.assertEqual(videogame.story_mode, VGEnum.DONE)
+        self.assertEqual(videogame.any_percent, VGEnum.DONE)
