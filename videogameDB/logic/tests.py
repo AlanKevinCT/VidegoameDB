@@ -80,3 +80,25 @@ class VidegamesTest(TestCase):
         self.assertEqual(response.status_code, 302)
         with self.assertRaises(Videogame.DoesNotExist):
             Videogame.objects.get(id_game=vg.id_game)
+
+    def test_edit_vg(self):
+        vg = Videogame.objects.create(
+            title='Underpants',
+            relase_date='2020-12-30',
+            is_it_bought=False,
+            platform='NES',
+            story_mode=VGEnum.DONE,
+            any_percent=VGEnum.NOT_STARTED
+        )
+        response = self.client.patch(reverse('edit_vg', args=[vg.id_game])), {
+            'title': 'Deltarune',
+            'is_it_bought': True,
+            'platform': 'PC',
+            'any_percent': VGEnum.DONE
+        }
+        self.assertEqual(response.status_code, 302)
+        videogame = Videogame.objects.get(title='Deltarune')
+        self.assertNotEqual(videogame.is_it_bought, vg.title)
+        self.assertNotEqual(videogame.is_it_bought, vg.is_it_bought)
+        self.assertNotEqual(videogame.platform, vg.platform)
+        self.assertNotEqual(videogame.any_percent, vg.any_percent)
