@@ -76,7 +76,7 @@ class VidegamesTest(TestCase):
             story_mode=VGEnum.NOT_STARTED,
             any_percent=VGEnum.NOT_STARTED
         )
-        response = self.client.delete(reverse('rm', args=[vg.id_game]))
-        self.assertEqual(response.status_code, 204)
+        response = self.client.delete(reverse('rm_vg', args=[vg.id_game]))
+        self.assertEqual(response.status_code, 302)
         with self.assertRaises(Videogame.DoesNotExist):
-            Videogame.objects.get(id=vg.id)
+            Videogame.objects.get(id_game=vg.id_game)
