@@ -19,6 +19,7 @@ class Videogame(models.Model):
                     max_length=15,
                     choices=VGEnum.choices,
                     default=VGEnum.NOT_STARTED)
+    any_picture = models.ImageField(upload_to='images/')
 
     def __str__(self):
         return self.nombre

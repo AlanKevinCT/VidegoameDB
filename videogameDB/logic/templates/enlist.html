@@ -16,6 +16,11 @@
                 <br> platform: {{ game.platform }}
                 <br> story mode: {{ game.story_mode }}
                 <br> any percent: {{ game.any_percent }}
+                {% if game.any_picture %}
+                    <br> <img src="{{ game.any_picture.url }}" alt="{{ game.title }}" style="max-width: 200px;">
+                {% else %}
+                    <br> No image available
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
